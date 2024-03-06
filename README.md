@@ -22,3 +22,6 @@
 - 테스트 코드 작성을 원활하게 돕는 테스트 라이브러리 (JUnit에 얹어서 사용할 것임)
 - 풍부한 API, 메서드 체이닝 지원
 
+<h2>Lombok</h2>
+- @Data, @Setter, @AllArgsConstructor 지양
+- 양방향 연관관계 시, @ToString 순환 참조 문제 발생함 (그래서 DTO에만 쓰는편)
