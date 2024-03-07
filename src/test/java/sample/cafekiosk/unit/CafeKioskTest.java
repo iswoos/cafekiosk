@@ -1,6 +1,7 @@
 package sample.cafekiosk.unit;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import sample.cafekiosk.unit.beverage.Americano;
 import sample.cafekiosk.unit.beverage.Latte;
@@ -114,6 +115,26 @@ class CafeKioskTest {
         assertThatThrownBy(() -> cafeKiosk.createOrder(LocalDateTime.of(2023, 1, 17, 9, 59)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("주문 시간이 아닙니다. 관리자에게 문의하세요.");
+    }
+
+    @DisplayName("주문한 음료의 총 금액을 구할 수 있다")
+    @Test
+    void test() {
+        // given
+        CafeKiosk cafeKiosk = new CafeKiosk();
+        Americano americano = new Americano();
+        Latte latte = new Latte();
+
+        cafeKiosk.add(americano, 2);
+        cafeKiosk.add(latte, 2);
+
+        // when
+        int totalPrice = cafeKiosk.calculateTotalPriceToStream();
+
+        // then
+        assertThat(totalPrice).isEqualTo(17000);
+
+
     }
 }
 

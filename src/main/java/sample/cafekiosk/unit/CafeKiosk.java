@@ -46,6 +46,12 @@ public class CafeKiosk {
         return totalPrice;
     }
 
+    public int calculateTotalPriceToStream() {
+        return beverages.stream()
+                .mapToInt(Beverage::getPrice)
+                .sum();
+    }
+
     public Order createOrder() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalTime currentTime = currentDateTime.toLocalTime();
