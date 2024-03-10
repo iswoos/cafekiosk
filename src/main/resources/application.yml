@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    default: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3309/cafekiosk?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    #    url : jdbc:mysql://database-1.cnlz5hxwnmxi.ap-northeast-2.rds.amazonaws.com:3306/demo?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false
+    #    url: jdbc:mysql://localhost:3306/local?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+#   날아가는 SQL확인하고 싶을 때 활성화
+    show-sql: true
+    properties:
+      hibernate:
+#   날아가는 SQL을 조금 더 예쁘게 보고 싶을 때 활성화
+        format_sql: true
+#   기본값은 false임. Hibernate 초기화 이후 data.sql 실행하게 하고 싶을 때 활성화
+    defer-datasource-initialization: true
+  # sql initializer를 항상 사용하겠다는 뜻, 애플리케이션 시작 시점에 SQL 초기화를 항상 수행
+  sql:
+    init:
+      mode: always
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# sql initializer를 사용하지 않겠다는 뜻
+  sql:
+    init:
+      mode: never
