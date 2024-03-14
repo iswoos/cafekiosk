@@ -14,13 +14,17 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.*;
 import static sample.cafekiosk.spring.domain.product.ProductSellingStatus.*;
 
+// 궁금사항 아래 테스트 2개를 동시에 돌릴 때, SpringBootTest로 하면 1개가 실패하고, DataJpaTest로 하면 모두 성공한다
+// 이유
+// DataJpaTest를 들어가보면, @Transactional이 선언되어 있다. 이로 인해 테스트가 종료되면 Rollback을 시켜준다.
+// 그에 비해 SpringBootTest는 @Transactional이 없다. 그래서 Rollback이 없다.
 
 // Spring에서 통합테스를 위해 제공하는 어노테이션
-@SpringBootTest
+//@SpringBootTest
 // test를 돌릴 때 사용할 Profiles를 지정 (application.yml의 on-profile:test로 설정된 값을 따름)
 @ActiveProfiles("test")
 // JPA관련된 Bean들만 주입을 해줌으로써, SpringbootTest비해 속도가 빠름
-//@DataJpaTest
+@DataJpaTest
 class ProductRepositoryTest {
 
     @Autowired
