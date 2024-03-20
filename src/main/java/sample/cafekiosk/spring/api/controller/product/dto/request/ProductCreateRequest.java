@@ -1,11 +1,13 @@
 package sample.cafekiosk.spring.api.controller.product.dto.request;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sample.cafekiosk.spring.api.service.product.request.ProductCreateServiceRequest;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus;
 import sample.cafekiosk.spring.domain.product.ProductType;
@@ -13,6 +15,10 @@ import sample.cafekiosk.spring.domain.product.ProductType;
 @Getter
 @NoArgsConstructor
 public class ProductCreateRequest {
+
+    // NotNull >> Null이 아니어야 한다. (빈문자열 "", 공백이 있는 문자열 " " 허용)
+    // NotEmpty >> 공백이 있는 문자열까진 허용 " "
+    // NotBlank >> 위 경우 모두 허용 안 함
 
     @NotNull(message = "상품 타입은 필수입니다.")
     private ProductType type;
@@ -34,13 +40,13 @@ public class ProductCreateRequest {
         this.price = price;
     }
 
-    public Product toEntity(String nextProductNumber) {
-        return Product.builder()
-                .productNumber(nextProductNumber)
+    public ProductCreateServiceRequest toServiceRequest() {
+        return ProductCreateServiceRequest.builder()
                 .type(type)
                 .sellingStatus(sellingStatus)
                 .name(name)
                 .price(price)
                 .build();
     }
+
 }
