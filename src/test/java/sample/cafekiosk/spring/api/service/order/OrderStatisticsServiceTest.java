@@ -45,7 +45,7 @@ class OrderStatisticsServiceTest {
     @Autowired
     private MailSendHistoryRepository mailSendHistoryRepository;
 
-    @MockBean
+    @MockBean //가짜 Bean
     private MailSendClient mailSendClient;
 
     @AfterEach
