@@ -3,10 +3,7 @@ package sample.cafekiosk.spring.api.service.mail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sample.cafekiosk.spring.client.mail.MailSendClient;
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistory;
@@ -29,7 +26,7 @@ import static org.mockito.Mockito.times;
 @ExtendWith(MockitoExtension.class)
 class MailServiceTest {
 
-    @Spy
+    @Mock
     private MailSendClient mailSendClient;
 
     @Mock
@@ -54,13 +51,18 @@ class MailServiceTest {
         // Mockito의 Spy사용 시, 아래와 같이 when절 사용불가. Spy는 실제 객체를 기반으로 만들어지기 때문.
 //        Mockito.when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
 //                .thenReturn(true);
+        // 위와 동일한 기능을 하나, BDD스타일에 맞게끔 하였음 실제로 Mockito를 상속받고 있으며 모든 기능이 동일하다.
+        BDDMockito.given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+                .willReturn(true);
+
+
 
         // Mockito의 Spy사용 시, 아래 코드를 사용해야함
         // doReturn으로 Stubbing해준 sendEmail만 원하는 행위대로 진행이 되고, 실제 객체의 나머지 a,b,c 기능은 그대로 동작이 되었음
         // Spy => 한 객체에서 일부 기능은 실제 객체대로 동작하게 하고, 일부 기능은 Stubbing을 하고싶을 때 사용 (쓰는 빈도는 그리 많지 않고 주로 Mock을 씀)
-        doReturn(true)
-                .when(mailSendClient)
-                .sendEmail(anyString(), anyString(), anyString(), anyString());
+//        doReturn(true)
+//                .when(mailSendClient)
+//                .sendEmail(anyString(), anyString(), anyString(), anyString());
 
         // when
         boolean result = mailService.sendMail("", "", "", "");
