@@ -165,7 +165,7 @@ class OrderServiceTest {
                 );
     }
 
-    @DisplayName("재고가 없는 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
+    @DisplayName("재고가 부족한 상품으로 주문을 생성하려는 경우 예외가 발생한다.")
     @Test
     void createOrderWithNoStock() {
         // given
@@ -176,8 +176,9 @@ class OrderServiceTest {
         Product product3 = createProduct(HANDMADE, "003", 5000);
         productRepository.saveAll(List.of(product1, product2, product3));
 
-        Stock stock1 = Stock.create("001", 1);
+        Stock stock1 = Stock.create("001", 2);
         Stock stock2 = Stock.create("002", 2);
+        stock1.deductQuantity(1); // todo : 해당 테스트를 이해하는데, 논리적인 사고가 1번 더 들어가야해서 좋지 않은 테스트 작성법임. 제거하는 것이 옳음, 또한 주문 생성에 대한 테스트를 봐야함으로써, 테스트 주제와 맞지않는 해당 given절 기능에서 발생하는 문제가 발생하며 또한 캐치하지도 못함
         stockRepository.saveAll(List.of(stock1, stock2));
 
 

@@ -53,7 +53,7 @@ public class CafeKiosk {
     }
 
     public Order createOrder() {
-        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now(); // 해당 값과 같이, 제어할 수 없는 값은 아래 메서드와 같이 상위에 넘기는 식으로 해결
         LocalTime currentTime = currentDateTime.toLocalTime();
         if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)) {
             throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요.");
