@@ -48,10 +48,18 @@ class OrderServiceTest {
 
     @AfterEach // Test내부의 @Transactional를 통해 자동롤백시킬 수 있음. 해당 방식은 수동으로 데이터를 삭제하여 롤백시키는 셈임.
     void tearDown() {
-//        productRepository.deleteAll();  -- 두개의 차이가 있음. deleteAllInBatch를 강사는 더 선호하나, 아직 이유는 나오지 않음
+        // deleteAll : select로 테이블 전체를 읽은 뒤, row개수만큼 delete하는 쿼리를 날림 (order를 지울 때, 외래키로 사용하고 있는 orderProduct를 자동으로 지워주는 장점은 있음,
+        // 하지만 다수의 쿼리가 발생하니 테스트 비용이 많이 들어서 비추천)
+//        orderProductRepository.deleteAll();
+//        productRepository.deleteAll();
+//        orderRepository.deleteAll();
+        // deleteAllInBatch : 벌크성으로 삭제작업을 하여 테스트 비용이 적게 듦. 하지만 외래키 조건이 걸려있을 시, 외래키를 사용하는 테이블을 먼저 삭제해줘야할 것을 고려하고 써야함 (강사는 더 선호함)
         orderProductRepository.deleteAllInBatch();
         productRepository.deleteAllInBatch();
         orderRepository.deleteAllInBatch();
+
+
+
         stockRepository.deleteAllInBatch();
     }
 

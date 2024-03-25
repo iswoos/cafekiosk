@@ -55,6 +55,8 @@ Mock(가짜) 객체를 사용해 스프링 MVC동작을 재현할 수 있는 테
 - 한 눈에 들어오는 Test Fixture 구성하기
   - Fixture : 고정물, 고정되어 있는 물체
   - 테스트를 위해 원하는 상태로 고정시킨 일련의 객체 (주로 given절에 기재되는 것들) (ProductServiceTest 코드 참조)
+- Test Fixture 클렌징
+  - deleteAll와 deleteAllInBatch 차이점 학습 (OrderServiceTest 코드 참조)
 
 ==========================================================================================
 상품 번호 리스트를 받아 주문 생성하기
