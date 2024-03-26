@@ -19,7 +19,6 @@ public class OrderCreateRequest {
     private OrderCreateRequest(List<String> productNumbers) {
         this.productNumbers = productNumbers;
     }
-
     public OrderCreateServiceRequest toServiceRequest() {
         return OrderCreateServiceRequest.builder()
                 .productNumbers(productNumbers)
